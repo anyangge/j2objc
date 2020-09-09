@@ -12,6 +12,7 @@
  * limitations under the License.
  */
 
+import com.google.j2objc.annotations.AutoreleasePool;
 import junit.framework.TestCase;
 
 /** @author Michał Pociecha-Łoś */
@@ -30,35 +31,33 @@ public class RetentionTest extends TestCase {
         });
   }
 
-  // TODO(micapolos): Uncomment once fixed.
-  // public void testFieldAccess() {
-  //   Ref ref = new Ref();
-  //   ref.object = new Object();
-  //   runInNewThread(
-  //       () -> {
-  //         Object object = ref.object;
-  //         runInNewThread(
-  //             () -> {
-  //               ref.object = null;
-  //             });
-  //         object.hashCode(); // should not crash
-  //       });
-  // }
+  public void testFieldAccess() {
+    Ref ref = new Ref();
+    ref.object = new Object();
+    runInNewThread(
+        () -> {
+          Object object = ref.object;
+          runInNewThread(
+              () -> {
+                ref.object = null;
+              });
+          object.hashCode(); // should not crash
+        });
+  }
 
-  // TODO(micapolos): Uncomment once fixed.
-  // public void testFieldGetter() {
-  //   Ref ref = new Ref();
-  //   ref.object = new Object();
-  //   runInNewThread(
-  //       () -> {
-  //         Object object = ref.get();
-  //         runInNewThread(
-  //             () -> {
-  //               ref.object = null;
-  //             });
-  //         object.hashCode(); // should not crash
-  //       });
-  // }
+  public void testFieldGetter() {
+    Ref ref = new Ref();
+    ref.object = new Object();
+    runInNewThread(
+        () -> {
+          Object object = ref.get();
+          runInNewThread(
+              () -> {
+                ref.object = null;
+              });
+          object.hashCode(); // should not crash
+        });
+  }
 
   // TODO(micapolos): Uncomment once fixed.
   // public void testAutoreleasePoolInForLoop() {

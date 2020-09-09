@@ -1653,7 +1653,8 @@ public class StatementGeneratorTest extends GenerationTest {
         "}"), "Test", "Test.m");
     // Verify correct type inference.
     assertTranslation(translation, "JavaUtilArrayList *list = create_JavaUtilArrayList_init();");
-    assertTranslation(translation, "id<JavaUtilStreamStream> stream = [list stream];");
+    assertTranslation(translation,
+        "id<JavaUtilStreamStream> stream = JreRetainedLocalValue([list stream]);");
   }
 
   public void testVarLambdaExpressionParameter() throws IOException {
